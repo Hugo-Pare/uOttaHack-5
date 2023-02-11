@@ -19,16 +19,12 @@ class Generate extends Component{
         await fetch(`http://localhost:8080/api/password/${this.state.value}/${this.state.value}`, {
             mode: 'no-cors',
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Credentials': 'true',
-                'Access-Control-Allow-Origin': 'http://localhost:3000'
+                'Content-Type': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(response => this.setState({passwords: response}))
-        .then(() => {
-            console.log('Results', this.state.response);
-        })
+        .then(response => console.log(response))
+        // .then(response => response.json())
+        // .then(response => this.setState({passwords: response}))
         .catch(error =>{console.log(error)})
 
         // const response = await axios.get("http://localhost:8080/",{ params: {length: this.state.value}});
