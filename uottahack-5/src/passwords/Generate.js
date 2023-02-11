@@ -17,24 +17,49 @@ class Generate extends Component{
     async generatePassword(e){
         e.preventDefault();
         console.log("generate new password");
+        var self = this;
 
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/api/password/${this.state.value}/${this.state.value}`,
+            url: `http://localhost:3000/api/password/${this.state.value}/${this.state.value}`,
             mode: 'no-cors'
         }
 
-        axios.request(options).then(response =>
+        axios.request(options).then(function (response){
             //password and passphrase
-            this.setState({
+            console.log(response)
+            self.setState({
                 password: response.data.password,
                 passphrase: response.data.passphrase,
                 generatePassword: true
-            }))
+            })})
         .catch(function (error) {
             console.error(error);
         });
     }
+
+    async checkPasswordStrength(e){
+        e.preventDefault();
+
+        const axios = require("axios");
+
+        const options = {
+            method: 'GET',
+            url: 'https://check-password-strength-with-zxcvbn1.p.rapidapi.com/check-password-strength',
+            params: {password: '1239902'},
+            headers: {
+                'X-RapidAPI-Key': '85dc47a48dmsh35be22abe4ae707p136415jsn4ec8736e73bc',
+                'X-RapidAPI-Host': 'check-password-strength-with-zxcvbn1.p.rapidapi.com'
+            }
+        };
+
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
+
     changeValue = event => {
         this.setState({value: event.target.value});
         // console.log(event.target.value);
