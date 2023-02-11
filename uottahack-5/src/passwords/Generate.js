@@ -10,52 +10,98 @@ class Generate extends Component{
             numbers: false,
             capitals: false,
             symbols: false,
-            value: 14,
+            value: 21,
             passphrase: "",
-            password: ""
+            password: "",
+            passwordStrength: "",
         }
-        this.generatePassword = this.generatePassword.bind(this)
+        this.generatePassword = this.generatePassword.bind(this);
+        this.generatePassphrase = this.generatePassphrase.bind(this);
+        this.checkPasswordStrength = this.checkPasswordStrength.bind(this)
     }
 
     async generatePassword(e){
         e.preventDefault();
         console.log("generate new password");
+        this.setState({passphrase: ""});
 
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/api/password/${this.state.value}/${this.state.value}`,
+            url: `http://localhost:8080/api/password/${this.state.value}/${this.state.numbers}/${this.state.capitals}/${this.state.symbols}`,
             mode: 'no-cors'
         }
 
         axios.request(options).then(response =>{
             //password and passphrase
             this.setState({
-                password: response.data.password,
+                password: response.data.password
+            });
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+        this.checkPasswordStrength(e, "password");
+    }
+
+    async generatePassphrase(e){
+        e.preventDefault();
+        console.log("generate new passphrase");
+        this.setState({password: ""});
+
+        const options = {
+            method: 'GET',
+            url: `http://localhost:8080/api/passphrase/${this.state.value}/${this.state.numbers}/${this.state.capitals}/${this.state.symbols}`,
+            mode: 'no-cors'
+        }
+
+        axios.request(options).then(response =>{
+            //password and passphrase
+            this.setState({
                 passphrase: response.data.passphrase
             });
         })
         .catch(function (error) {
             console.error(error);
         });
+
+        this.checkPasswordStrength(e, "passphrase");
     }
 
-    async checkPasswordStrength(e){
+    async checkPasswordStrength(e, pass){
         e.preventDefault();
 
         const axios = require("axios");
+        const options = {}
 
-        const options = {
-            method: 'GET',
-            url: 'https://check-password-strength-with-zxcvbn1.p.rapidapi.com/check-password-strength',
-            params: {password: '1239902'},
-            headers: {
-                'X-RapidAPI-Key': '85dc47a48dmsh35be22abe4ae707p136415jsn4ec8736e73bc',
-                'X-RapidAPI-Host': 'check-password-strength-with-zxcvbn1.p.rapidapi.com'
-            }
-        };
+        if(pass = "password"){
+            options = {
+                method: 'GET',
+                url: 'https://check-password-strength-with-zxcvbn1.p.rapidapi.com/check-password-strength',
+                params: {password: this.state.password},
+                headers: {
+                    'X-RapidAPI-Key': '85dc47a48dmsh35be22abe4ae707p136415jsn4ec8736e73bc',
+                    'X-RapidAPI-Host': 'check-password-strength-with-zxcvbn1.p.rapidapi.com'
+                }
+            };
+        }
+        else{
+            options = {
+                method: 'GET',
+                url: 'https://check-password-strength-with-zxcvbn1.p.rapidapi.com/check-password-strength',
+                params: {password: this.state.passphrase},
+                headers: {
+                    'X-RapidAPI-Key': '85dc47a48dmsh35be22abe4ae707p136415jsn4ec8736e73bc',
+                    'X-RapidAPI-Host': 'check-password-strength-with-zxcvbn1.p.rapidapi.com'
+                }
+            };
+        }
 
-        axios.request(options).then(function (response) {
-            console.log(response.data);
+        axios.request(options).then(response =>{
+            //password and passphrase
+            this.setState({
+                passwordStrength: response.data
+            });
         }).catch(function (error) {
             console.error(error);
         });
@@ -112,22 +158,23 @@ class Generate extends Component{
                     
 
                     <div className="slider-container">
-                        <input type="range" className="slide" id="slider" min="8" max="20" value={this.value} step={1} onChange={this.changeValue}/>
+                        <input type="range" className="slide" id="slider" min="12" max="30" value={this.value} step={1} onChange={this.changeValue}/>
                     </div>
 
-                    <div className="button">
-                        <button onClick={(e) => this.generatePassword(e)}>Generate</button>
+                    <div className="buttons">
+                        <button onClick={(e) => this.generatePassword(e)}>Generate Password</button>
+                        <button onClick={(e) => this.generatePassphrase(e)}>Generate Passphrase</button>
                     </div>
 
-                    {this.state.password == "" ? 
+                    {this.state.passwordStrength != "" ? 
                         <div>
                             <div>
                                 <input type="text" value={this.state.password} readOnly id="copyPassword"></input>
-                                <button onClick={this.copyMyPassword}>Copy To Clipboard</button>
+                                <button onClick={this.copyMyPassword}>Copy</button>
                             </div>
                             <div>
                                 <input type="text" value={this.state.passphrase} readOnly id="copyPassphrase"></input>
-                                <button onClick={this.copyMyPassphrase}>Copy To Clipboard</button>
+                                <button onClick={this.copyMyPassphrase}>Copy</button>
                             </div>
                         </div>
                         

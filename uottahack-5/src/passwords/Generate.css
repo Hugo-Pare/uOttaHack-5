@@ -1,5 +1,32 @@
 #slider{
-    border-radius: 8px;
-    height: 7px;
-    width: 280px;
+    border-radius: 20px;
+    height: 10px;
+    width: 360px;
+}
+
+body{
+    padding: 5%;
+}
+
+h1, p{
+    text-align: center;
+}
+
+.slider-container{
+    text-align: center;
+}
+
+.buttons{
+    text-align: center;
+    padding: 1%;
+}
+
+button{
+    padding: 1%;
+    margin: 1%;
+}
+
+.checkboxes{
+    padding-bottom: 1%;
+    margin-left: 40%;
 }
