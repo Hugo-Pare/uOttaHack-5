@@ -16,7 +16,7 @@ class Generate extends Component{
         e.preventDefault();
         console.log("generate new password");
 
-        fetch(`http://localhost:8080/api/password/${this.state.value}/${this.state.value}`, {
+        await fetch(`http://localhost:8080/api/password/${this.state.value}/${this.state.value}`, {
             mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,6 +29,7 @@ class Generate extends Component{
         .then(() => {
             console.log('Results', this.state.response);
         })
+        .catch(error =>{console.log(error)})
 
         // const response = await axios.get("http://localhost:8080/",{ params: {length: this.state.value}});
         // console.log(response.data);
