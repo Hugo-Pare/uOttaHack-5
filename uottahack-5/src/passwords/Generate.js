@@ -35,7 +35,9 @@ class Generate extends Component{
                 password: response.data.password,
                 passphrase: response.data.passphrase,
                 generatePassword: true
-            }),() => console.log(response)})
+            })
+            return response.data;
+        })
         .catch(function (error) {
             console.error(error);
         });
