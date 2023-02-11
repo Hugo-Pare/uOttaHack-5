@@ -11,7 +11,6 @@ class Generate extends Component{
             capitals: false,
             symbols: false,
             value: 14,
-            generatedPassword: false,
             passphrase: "",
             password: ""
         }
@@ -31,8 +30,8 @@ class Generate extends Component{
         axios.request(options).then(function (response){
             //password and passphrase
             this.setState({
-                password: response.data,
-                generatePassword: true
+                password: response.data.password,
+                passphrase: response.data.passphrase
             });
         })
         .catch(function (error) {
@@ -120,7 +119,7 @@ class Generate extends Component{
                         <button onClick={(e) => this.generatePassword(e)}>Generate</button>
                     </div>
 
-                    {this.state.generatedPassword ? 
+                    {this.state.password == "" ? 
                         <div>
                             <div>
                                 <input type="text" value={this.state.password} readOnly id="copyPassword"></input>
