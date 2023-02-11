@@ -4,14 +4,18 @@ import './Generate.css';
 
 class Generate extends Component{
 
-    state = {
-        numbers: false,
-        capitals: false,
-        symbols: false,
-        value: 14,
-        generatedPassword: false,
-        passphrase: "",
-        password: ""
+    constructor(props){
+        super(props)
+        this.state = {
+            numbers: false,
+            capitals: false,
+            symbols: false,
+            value: 14,
+            generatedPassword: false,
+            passphrase: "",
+            password: ""
+        }
+        this.generatePassword = this.generatePassword.bind(this)
     }
 
     async generatePassword(e){
