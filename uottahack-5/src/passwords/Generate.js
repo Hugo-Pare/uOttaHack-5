@@ -21,7 +21,6 @@ class Generate extends Component{
     async generatePassword(e){
         e.preventDefault();
         console.log("generate new password");
-        var self = this;
 
         const options = {
             method: 'GET',
@@ -31,13 +30,12 @@ class Generate extends Component{
 
         axios.request(options).then(function (response){
             //password and passphrase
-            self.setState({
+            this.setState({
                 password: response.data.password,
                 passphrase: response.data.passphrase,
                 generatePassword: true
-            })
-            return response.data;
-        })
+            });
+        }.bind(this))
         .catch(function (error) {
             console.error(error);
         });
