@@ -16,19 +16,18 @@ class Generate extends Component{
         e.preventDefault();
         console.log("generate new password");
 
-        await fetch(`http://localhost:8080/api/password/${this.state.value}/${this.state.value}`, {
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => console.log(response))
-        // .then(response => response.json())
-        // .then(response => this.setState({passwords: response}))
-        .catch(error =>{console.log(error)})
+        const options = {
+            method: 'GET',
+            url: `http://localhost:8080/api/password/${this.state.value}/${this.state.value}`,
+            mode: 'no-cors'
+        }
 
-        // const response = await axios.get("http://localhost:8080/",{ params: {length: this.state.value}});
-        // console.log(response.data);
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+        }).catch(function (error) {
+            console.error(error);
+        });
+
         this.setState({generatePassword: true})
     }
 
