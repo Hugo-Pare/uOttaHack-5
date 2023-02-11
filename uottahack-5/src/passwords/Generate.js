@@ -21,18 +21,17 @@ class Generate extends Component{
 
         const options = {
             method: 'GET',
-            url: `http://localhost:3000/api/password/${this.state.value}/${this.state.value}`,
+            url: `http://localhost:8080/api/password/${this.state.value}/${this.state.value}`,
             mode: 'no-cors'
         }
 
         axios.request(options).then(function (response){
             //password and passphrase
-            console.log(response)
             self.setState({
                 password: response.data.password,
                 passphrase: response.data.passphrase,
                 generatePassword: true
-            })})
+            }),() => console.log(response)})
         .catch(function (error) {
             console.error(error);
         });
