@@ -25,9 +25,7 @@ class Generate extends Component{
             }
         })
         .then(response => response.json())
-        .then(response => this.setState(
-            {passwords: response}
-        ))
+        .then(response => this.setState({passwords: response}))
         .then(() => {
             console.log('Results', this.state.response);
         })
@@ -35,10 +33,6 @@ class Generate extends Component{
         // const response = await axios.get("http://localhost:8080/",{ params: {length: this.state.value}});
         // console.log(response.data);
         this.setState({generatePassword: true})
-        // console.log("numbers : " + this.state.numbers);
-        // console.log("capitals : " + this.state.capitals);
-        // console.log("symbols : " + this.state.symbols);
-        // console.log("value : " + this.state.value);
     }
 
     changeValue = event => {
@@ -61,8 +55,14 @@ class Generate extends Component{
         // console.log(event.target.checked);
     }
 
-    copyMyText(){
-        var textToCopy = document.getElementById("copyMe");
+    copyMyPassword(){
+        var textToCopy = document.getElementById("copyPassword");
+        textToCopy.select();
+        document.execCommand("copy");
+    }
+
+    copyMyPassphrase(){
+        var textToCopy = document.getElementById("copyPassphrase");
         textToCopy.select();
         document.execCommand("copy");
     }
@@ -95,9 +95,17 @@ class Generate extends Component{
 
                     {this.state.generatedPassword ? 
                         <div>
-                            <input type="text" value="123Password!" readOnly id="copyMe"></input>
-                            <button onClick={this.copyMyText}>Copy To Clipboard</button>
-                        </div> 
+                            <div>
+                                <input type="text" value="123Password!" readOnly id="copyPassword"></input>
+                                <button onClick={this.copyMyPassword}>Copy To Clipboard</button>
+                            </div>
+                            <div>
+                                <input type="text" value="123PasswordPhrase!" readOnly id="copyPassphrase"></input>
+                                <button onClick={this.copyMyPassphrase}>Copy To Clipboard</button>
+                            </div>
+                        </div>
+                        
+                         
                     : <div></div>}
                 </div>
             </>
