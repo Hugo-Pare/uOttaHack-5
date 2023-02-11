@@ -31,11 +31,10 @@ class Generate extends Component{
         axios.request(options).then(function (response){
             //password and passphrase
             this.setState({
-                password: response.data.password,
-                passphrase: response.data.passphrase,
+                password: response.data,
                 generatePassword: true
             });
-        }.bind(this))
+        })
         .catch(function (error) {
             console.error(error);
         });
