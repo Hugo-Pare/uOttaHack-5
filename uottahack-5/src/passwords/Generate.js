@@ -24,14 +24,14 @@ class Generate extends Component{
             mode: 'no-cors'
         }
 
-        axios.request(options).then(function (response) {
+        axios.request(options).then(response =>
             //password and passphrase
             this.setState({
                 password: response.data.password,
                 passphrase: response.data.passphrase,
                 generatePassword: true
-            })
-        }).catch(function (error) {
+            }))
+        .catch(function (error) {
             console.error(error);
         });
     }
