@@ -9,28 +9,11 @@ class Generate extends Component{
         capitals: false,
         symbols: false,
         value: 14,
-        generatedPassword: false
+        generatedPassword: false,
+        passphrase: "",
+        password: ""
     }
 
-    // async generatePassword(e){
-    //     e.preventDefault();
-    //     console.log("generate new password");
-    //
-    //     // await fetch(`http://localhost:8080/api/password/${this.state.value}/${this.state.value}`, {
-    //     //     mode: 'no-cors',
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json'
-    //     //     }
-    //     // })
-    //     //     // .then(response => console.log(response.json()))
-    //     //     .then(response => response.json())
-    //     //     .then(response => this.setState({passwords: response}))
-    //     //     .catch(error =>{console.log(error)})
-    //
-    //     const response = await axios.get("http://localhost:8080/",{ params: {passwordLength: this.state.value, passphraseLength:this.state.value}});
-    //     console.log(response.data);
-    //     this.setState({generatePassword: true})
-    // }
     async generatePassword(e){
         e.preventDefault();
         console.log("generate new password");
@@ -42,12 +25,15 @@ class Generate extends Component{
         }
 
         axios.request(options).then(function (response) {
-            console.log(response.data);
+            //password and passphrase
+            this.setState({
+                password: response.data.password,
+                passphrase: response.data.passphrase,
+                generatePassword: true
+            })
         }).catch(function (error) {
             console.error(error);
         });
-
-        this.setState({generatePassword: true})
     }
     changeValue = event => {
         this.setState({value: event.target.value});
@@ -110,11 +96,11 @@ class Generate extends Component{
                     {this.state.generatedPassword ? 
                         <div>
                             <div>
-                                <input type="text" value="123Password!" readOnly id="copyPassword"></input>
+                                <input type="text" value={this.state.password} readOnly id="copyPassword"></input>
                                 <button onClick={this.copyMyPassword}>Copy To Clipboard</button>
                             </div>
                             <div>
-                                <input type="text" value="123PasswordPhrase!" readOnly id="copyPassphrase"></input>
+                                <input type="text" value={this.state.passphrase} readOnly id="copyPassphrase"></input>
                                 <button onClick={this.copyMyPassphrase}>Copy To Clipboard</button>
                             </div>
                         </div>
