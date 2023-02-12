@@ -13,11 +13,9 @@ class Generate extends Component{
             value: 21,
             passphrase: "",
             password: "",
-            passwordStrength: "a",
         }
         this.generatePassword = this.generatePassword.bind(this);
         this.generatePassphrase = this.generatePassphrase.bind(this);
-        this.checkPasswordStrength = this.checkPasswordStrength.bind(this)
     }
 
     async generatePassword(e){
@@ -40,8 +38,6 @@ class Generate extends Component{
         .catch(function (error) {
             console.error(error);
         });
-
-        //this.checkPasswordStrength(e, "password");
     }
 
     async generatePassphrase(e){
@@ -62,46 +58,6 @@ class Generate extends Component{
             });
         })
         .catch(function (error) {
-            console.error(error);
-        });
-
-        //this.checkPasswordStrength(e, "passphrase");
-    }
-
-    async checkPasswordStrength(e, pass){
-        e.preventDefault();
-
-        let options = {}
-
-        if(pass = "password"){
-            options = {
-                method: 'GET',
-                url: 'https://check-password-strength-with-zxcvbn1.p.rapidapi.com/check-password-strength',
-                params: {password: this.state.password},
-                headers: {
-                    'X-RapidAPI-Key': '85dc47a48dmsh35be22abe4ae707p136415jsn4ec8736e73bc',
-                    'X-RapidAPI-Host': 'check-password-strength-with-zxcvbn1.p.rapidapi.com'
-                }
-            };
-        }
-        else{
-            options = {
-                method: 'GET',
-                url: 'https://check-password-strength-with-zxcvbn1.p.rapidapi.com/check-password-strength',
-                params: {password: this.state.passphrase},
-                headers: {
-                    'X-RapidAPI-Key': '85dc47a48dmsh35be22abe4ae707p136415jsn4ec8736e73bc',
-                    'X-RapidAPI-Host': 'check-password-strength-with-zxcvbn1.p.rapidapi.com'
-                }
-            };
-        }
-
-        axios.request(options).then(response =>{
-            //password and passphrase
-            this.setState({
-                passwordStrength: response.data
-            });
-        }).catch(function (error) {
             console.error(error);
         });
     }
@@ -165,16 +121,23 @@ class Generate extends Component{
                         <button onClick={(e) => this.generatePassphrase(e)}>Generate Passphrase</button>
                     </div>
 
-                    {this.state.passwordStrength != "" ? 
-                        <div>
-                            <div>
-                                <input type="text" value={this.state.password} readOnly id="copyPassword"></input>
-                                <button onClick={this.copyMyPassword}>Copy</button>
-                            </div>
-                            <div>
-                                <input type="text" value={this.state.passphrase} readOnly id="copyPassphrase"></input>
-                                <button onClick={this.copyMyPassphrase}>Copy</button>
-                            </div>
+                    {(this.state.password != "") || (this.state.passphrase != "")? 
+                        <div className="generated-password">
+                            {this.state.password != "" ?
+                                <div>
+                                    <label htmlFor="copyPassword">Generated Password : </label>
+                                    <input type="text" value={this.state.password} readOnly id="copyPassword"></input>
+                                    <button onClick={this.copyMyPassword}>Copy</button>
+                                </div>
+                            : 
+                                <div>
+                                    <div>
+                                    <label htmlFor="copyPassphrase">Generated Passphrase : </label>
+                                        <input type="text" value={this.state.passphrase} readOnly id="copyPassphrase"></input>
+                                        <button onClick={this.copyMyPassphrase}>Copy</button>
+                                    </div>
+                                </div>
+                            }
                         </div>
                         
                          
