@@ -13,8 +13,13 @@ body{
     padding: 5%;
 }
 
+label, button, input{
+    font-size: larger;
+}
+
 h1, p{
     text-align: center;
+    font-size: xx-large;
 }
 
 .slider-container{

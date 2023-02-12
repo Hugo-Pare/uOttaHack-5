@@ -100,7 +100,7 @@ class Generate extends Component{
             <>
                 <div className="body">
                     <h1>Password Generator</h1>
-                    <p>Choose a secure password using our tool !</p>
+                    <p>Choose a secure password/passphrase using our tool !</p>
 
                     <div className="checkboxes">
                         <input type="checkbox" id="numbers" onClick={this.changeNumbersBox}></input>
