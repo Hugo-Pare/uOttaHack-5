@@ -11,10 +11,24 @@
 
 body{
     padding: 5%;
+    background-color: rgb(229, 229, 229);
 }
 
 label, button, input{
     font-size: larger;
+}
+
+input[type='checkbox'] {
+    width:20px;
+    height:20px;
+    background:white;
+    border-radius:5px;
+    border:2px solid #555;
+}
+
+button:hover{
+    background-color: rgb(50, 50, 50);
+    color: antiquewhite;
 }
 
 h1, p{
