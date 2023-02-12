@@ -25,7 +25,7 @@ class Generate extends Component{
         console.log("generate new password");
         this.setState({passphrase: ""});
 
-        const options = {
+        let options = {
             method: 'GET',
             url: `http://localhost:8080/api/password/${this.state.value}/${this.state.numbers}/${this.state.capitals}/${this.state.symbols}`,
             mode: 'no-cors'
@@ -49,7 +49,7 @@ class Generate extends Component{
         console.log("generate new passphrase");
         this.setState({password: ""});
 
-        const options = {
+        let options = {
             method: 'GET',
             url: `http://localhost:8080/api/passphrase/${this.state.value}/${this.state.numbers}/${this.state.capitals}/${this.state.symbols}`,
             mode: 'no-cors'
@@ -72,7 +72,7 @@ class Generate extends Component{
         e.preventDefault();
 
         const axios = require("axios");
-        const options = {}
+        let options = {}
 
         if(pass = "password"){
             options = {
