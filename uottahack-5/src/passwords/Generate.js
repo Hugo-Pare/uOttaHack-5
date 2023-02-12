@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import * as axios from 'axios';
 import './Generate.css';
 
 class Generate extends Component{
@@ -13,7 +13,7 @@ class Generate extends Component{
             value: 21,
             passphrase: "",
             password: "",
-            passwordStrength: "",
+            passwordStrength: "a",
         }
         this.generatePassword = this.generatePassword.bind(this);
         this.generatePassphrase = this.generatePassphrase.bind(this);
@@ -71,7 +71,6 @@ class Generate extends Component{
     async checkPasswordStrength(e, pass){
         e.preventDefault();
 
-        const axios = require("axios");
         let options = {}
 
         if(pass = "password"){
